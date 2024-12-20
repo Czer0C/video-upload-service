@@ -19,7 +19,7 @@ router.post('/', upload.single('video'), async (req, res) => {
 
     const fileName = req.file.originalname
 
-    const outputDir = path.join('processing', fileName)
+    const outputDir = `../${path.join('processing', fileName)}`
 
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true })
