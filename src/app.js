@@ -1,6 +1,5 @@
 const express = require('express')
 const uploadRoutes = require('./routes/uploadRoutes')
-const downloadRoutes = require('./routes/downloadRoutes')
 const getRoutes = require('./routes/getRoutes')
 const cors = require('cors')
 
@@ -17,7 +16,6 @@ app.use(express.json())
 // Routes
 app.use('/videos', getRoutes)
 app.use('/videos/upload', uploadRoutes)
-app.use('/videos/download', downloadRoutes)
 
 // Start server
 const PORT = process.env.PORT || 5000
