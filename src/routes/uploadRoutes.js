@@ -29,15 +29,18 @@ router.post('/', upload.single('video'), async (req, res) => {
     //! store temporary file for processing service
     const inputPath = path.join(outputDir, fileName)
 
+    const processingId = getProcessingId()
+
     try {
       await fs.writeFileSync(inputPath, req.file.buffer)
 
       res.status(200).json({
         message: 'Processing file, you will be notified when it is done',
         outputDir,
+        processingId,
       })
 
-      const processingUrl = `http://localhost:5001/processing?filePath=${inputPath}&fileName=${fileName}`
+      const processingUrl = `http://localhost:5001/processing?filePath=${inputPath}&fileName=${fileName}&taskId=${processingId}`
 
       axios.get(processingUrl)
     } catch (error) {
@@ -69,5 +72,10 @@ router.post('/', upload.single('video'), async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 })
+
+//TODO: service to get processing id
+function getProcessingId() {
+  return Math.floor(Math.random() * 1000)
+}
 
 module.exports = router
