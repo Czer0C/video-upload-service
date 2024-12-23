@@ -7,7 +7,10 @@ const auth = require('../middleware/auth')
 router.get('/', async (req, res) => {
   const [, , listFiles] = await bucket.getFiles()
 
-  res.status(200).json(listFiles.items)
+  const finalListFiles =
+    typeof listFiles.items !== 'undefined' ? listFiles.items : []
+
+  res.status(200).json(finalListFiles)
 })
 
 router.get('/:fileName', async (req, res) => {
