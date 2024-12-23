@@ -1,4 +1,5 @@
 const express = require('express')
+const axios = require('axios')
 const multer = require('multer')
 const bucket = require('../config/gcs')
 const fs = require('fs')
@@ -28,12 +29,20 @@ router.post('/', upload.single('video'), async (req, res) => {
     //! store temporary file for processing service
     const inputPath = path.join(outputDir, fileName)
 
-    fs.writeFileSync(inputPath, req.file.buffer)
+    try {
+      await fs.writeFileSync(inputPath, req.file.buffer)
 
-    res.status(200).json({
-      message: 'Processing file, you will be notified when it is done',
-      outputDir,
-    })
+      res.status(200).json({
+        message: 'Processing file, you will be notified when it is done',
+        outputDir,
+      })
+
+      const processingUrl = `http://localhost:5001/processing?filePath=${inputPath}&fileName=${fileName}`
+
+      axios.get(processingUrl)
+    } catch (error) {
+      res.status(500).json({ error: err.message })
+    }
 
     // const blob = bucket.file(req.file.originalname)
 
