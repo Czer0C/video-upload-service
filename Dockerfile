@@ -13,5 +13,5 @@ RUN npm ci --production
 COPY . .
 
 # Expose the port and run the application
-EXPOSE 5002
+EXPOSE 5000
 CMD ["node", "src/app.js"]
