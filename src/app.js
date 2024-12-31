@@ -2,6 +2,7 @@ const express = require('express')
 const uploadRoutes = require('./routes/uploadRoutes')
 const getRoutes = require('./routes/getRoutes')
 const quickRoutes = require('./routes/quickRoutes')
+const streamRoutes = require('./routes/streamRoutes')
 const cors = require('cors')
 
 require('dotenv').config()
@@ -17,6 +18,7 @@ app.use(express.json())
 // Routes
 app.use('/videos', getRoutes)
 app.use('/videos/upload', uploadRoutes)
+app.use('/videos/stream', streamRoutes)
 
 app.use('/quick', quickRoutes)
 

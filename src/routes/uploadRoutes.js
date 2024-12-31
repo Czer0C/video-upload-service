@@ -12,7 +12,7 @@ const path = require('path')
 const storage = multer.memoryStorage()
 const upload = multer({ storage })
 
-router.post('/', upload.single('video'), async (req, res) => {
+router.post('/', auth, upload.single('video'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' })

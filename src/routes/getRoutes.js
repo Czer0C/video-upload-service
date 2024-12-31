@@ -4,6 +4,11 @@ const bucket = require('../config/gcs')
 const router = express.Router()
 const auth = require('../middleware/auth')
 
+
+router.get('/test', async (req, res) => {
+  res.status(200).json({ message: 'Test route' })
+})
+
 router.get('/', async (req, res) => {
   const { fileName } = req.query
 
@@ -46,6 +51,7 @@ router.get('/download', async (req, res) => {
     readStream.on('error', (err) => {
       res.status(500).json({ message: err.message })
     })
+
 
     readStream.pipe(res)
   } catch (error) {
